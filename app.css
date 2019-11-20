@@ -108,6 +108,7 @@ body {
 
 .todo-item input[type='checkbox']:checked~.todo-name {
      text-decoration: line-through;
+     opacity: 0.5;
 }
 
 .todo-item input[type='checkbox']:checked~.todo-name:after {
