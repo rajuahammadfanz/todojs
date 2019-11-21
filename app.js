@@ -44,7 +44,7 @@ function createTask(taskID, taskText) {
 
 inputBox.addEventListener('keyup', e => {
     if (e.which === 13 && inputBox.value.length) {
-        var taskNo = new Date().getSeconds();
+        var taskNo = new Date().getTime();
         let taskContent = inputBox.value;
         createTask(taskNo, taskContent);
         inputBox.value = "";
