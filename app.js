@@ -2,6 +2,8 @@ const app = document.querySelector("#app");
 const lists = document.querySelector(".task-lists");
 const inputBox = document.querySelector("#task-input");
 const listsWrapper = document.querySelector(".task-list-wrapper");
+var todoContent = {};
+var userValue;
 
 
 // Create Element
@@ -45,10 +47,10 @@ function createTask(taskID, taskText) {
 inputBox.addEventListener('keyup', e => {
     if (e.which === 13 && inputBox.value.length) {
         var taskNo = new Date().getTime();
-        let taskContent = inputBox.value;
-        createTask(taskNo, taskContent);
+        createTask(taskNo, inputBox.value);
         inputBox.value = "";
         listsWrapper.style.display = "block";
     }
-
 })
+
+//localStorage.setItem("todo", todoContent);
