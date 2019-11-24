@@ -2,10 +2,9 @@ let app = document.querySelector("#app");
 let lists = document.querySelector(".task-lists");
 let inputBox = document.querySelector("#task-input");
 let listsWrapper = document.querySelector(".task-list-wrapper");
-let taskNo = new Date().getTime();
 let itemsArr = localStorage.getItem('todoData') ? JSON.parse(localStorage.getItem('todoData')) : [];
 localStorage.setItem('todoData', JSON.stringify(itemsArr));
-
+let data = JSON.parse(localStorage.getItem('todoData'));
 
 // Create Element
 function createEle(ele) {
@@ -22,6 +21,17 @@ function setAttributes(ele, attrs) {
     for (var key in attrs) {
         ele.setAttribute(key, attrs[key]);
     }
+}
+
+// Create Task Content Object
+function taskObj(id,txt){
+    let singleTask = {
+        id:id,
+        content: txt,
+        status: false
+    };
+
+    return singleTask;
 }
 
 function createTask(taskID, taskText) {
@@ -47,19 +57,22 @@ function createTask(taskID, taskText) {
 
 inputBox.addEventListener('keyup', e => {
     if (e.which === 13 && inputBox.value.length) {
-        itemsArr.push(inputBox.value);
+        let taskID = new Date().getTime();
+
+        let obj = taskObj(taskID, inputBox.value);
+
+        itemsArr.push(obj);
         localStorage.setItem('todoData', JSON.stringify(itemsArr));
-        createTask(taskNo, inputBox.value);
+        createTask(taskID, inputBox.value);
         inputBox.value = "";
         listsWrapper.style.display = "block";
     }
 })
 
-let data = JSON.parse(localStorage.getItem('todoData'));
 data.map(item=>{
-    createTask(taskNo, item);
-    listsWrapper.style.display = "block";
+    createTask(item.id, item.content);
 })
+
 
 
 // Git Fork
