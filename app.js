@@ -1,9 +1,10 @@
-const app = document.querySelector("#app");
-const lists = document.querySelector(".task-lists");
-const inputBox = document.querySelector("#task-input");
-const listsWrapper = document.querySelector(".task-list-wrapper");
-var todoContent = {};
-var userValue;
+let app = document.querySelector("#app");
+let lists = document.querySelector(".task-lists");
+let inputBox = document.querySelector("#task-input");
+let listsWrapper = document.querySelector(".task-list-wrapper");
+let taskNo = new Date().getTime();
+let itemsArr = localStorage.getItem('todoData') ? JSON.parse(localStorage.getItem('todoData')) : [];
+localStorage.setItem('todoData', JSON.stringify(itemsArr));
 
 
 // Create Element
@@ -46,11 +47,31 @@ function createTask(taskID, taskText) {
 
 inputBox.addEventListener('keyup', e => {
     if (e.which === 13 && inputBox.value.length) {
-        var taskNo = new Date().getTime();
+        itemsArr.push(inputBox.value);
+        localStorage.setItem('todoData', JSON.stringify(itemsArr));
         createTask(taskNo, inputBox.value);
         inputBox.value = "";
         listsWrapper.style.display = "block";
     }
 })
 
-//localStorage.setItem("todo", todoContent);
+let data = JSON.parse(localStorage.getItem('todoData'));
+data.map(item=>{
+    createTask(taskNo, item);
+    listsWrapper.style.display = "block";
+})
+
+
+// Git Fork
+// Git Fork Button
+function gitFork(url) {
+    var anchorBtn = document.createElement('a');
+    anchorBtn.href = url;
+    var btnImg = document.createElement('img');
+    btnImg.src = 'https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png';
+    anchorBtn.setAttribute('style', 'position: fixed;top: 0;right: 0;z-index: 999;');
+    anchorBtn.appendChild(btnImg);
+    document.querySelector("body").appendChild(anchorBtn);
+}
+
+gitFork('https://github.com/rajuahammadfanz/todojs');
